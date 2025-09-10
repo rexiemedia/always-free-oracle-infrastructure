@@ -1,0 +1,32 @@
+- hosts: vm3
+  become: yes
+  tasks:
+
+    - name: Install required packages
+      apt:
+        name:
+          - tomcat9
+          - curl
+        state: present
+        update_cache: yes
+
+    - name: Download artifact from Nexus
+      get_url:
+        url: "{{ nexus_repo_url }}"
+        dest: "/tmp/{{ artifact_name }}"
+        url_username: "{{ lookup('env','NEXUS_USER') }}"
+        url_password: "{{ lookup('env','NEXUS_PASS') }}"
+        force: yes
+
+    - name: Deploy WAR to Tomcat webapps
+      copy:
+        src: "/tmp/{{ artifact_name }}"
+        dest: "{{ tomcat_webapps_dir }}/{{ artifact_name }}"
+        owner: tomcat
+        group: tomcat
+        mode: '0644'
+
+    - name: Restart Tomcat
+      service:
+        name: "{{ tomcat_service_name }}"
+        state: restarted

@@ -1,0 +1,28 @@
+- hosts: vm2
+  become: yes
+  tasks:
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+        update_cache: yes
+
+    - name: Copy Docker Compose template
+      template:
+        src: configs/docker-compose-sonarnexus.yml.j2
+        dest: /home/ubuntu/docker-compose-sonarnexus.yml
+
+    - name: Start SonarQube and Nexus
+      community.docker.docker_compose:
+        project_src: /home/ubuntu
+        files:
+          - docker-compose-sonarnexus.yml
+        state: present
+        restarted: yes

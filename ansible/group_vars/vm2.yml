@@ -1,0 +1,5 @@
+# VM2 variables
+sonar_user: sonar
+sonar_pass: "{{ lookup('env','SONAR_PASSWORD') }}"   # From GitHub Secret
+nexus_admin_user: admin
+nexus_admin_pass: "{{ lookup('env','NEXUS_PASS') }}" # From GitHub Secret

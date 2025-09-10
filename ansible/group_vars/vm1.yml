@@ -1,0 +1,17 @@
+---
+# VM1 Variables - Nginx & WireGuard
+
+# Domain name for Nginx reverse proxy
+domain_name: desdna.com
+
+# VM2 private IP to proxy SonarQube and Nexus requests
+vm2_private_ip: 10.0.1.2   # <-- Replace with actual VM2 private IP
+
+# WireGuard configuration
+wg_private_key: "{{ lookup('env','WG_PRIVATE_KEY') }}"   # Private key from environment or secret
+wg_public_key: "{{ lookup('env','WG_PUBLIC_KEY') }}"     # Public key of peer (your machine)
+wg_address: 10.0.0.1/24   # WireGuard interface address
+wg_listen_port: 51820
+
+# Allowed IPs for peers
+wg_allowed_ips: "0.0.0.0/0"  # Allows all traffic through VPN

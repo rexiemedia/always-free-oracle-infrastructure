@@ -5,7 +5,7 @@ The infrastructure is optimized for CI/CD, code quality, artifact storage, and s
 
 ---
 
-## 📦 Resources
+## Resources
 
 - **Total allocation**  
   - **RAM**: 24 GB  
@@ -23,7 +23,7 @@ The infrastructure is optimized for CI/CD, code quality, artifact storage, and s
 
 ---
 
-## 🛠️ Software Stack
+## Software Stack
 
 - **CI/CD & Dev Tools**
   - Jenkins (automation server)
@@ -49,8 +49,6 @@ The infrastructure is optimized for CI/CD, code quality, artifact storage, and s
   - Wine + Shellter  
 
 ---
-
-## 🚀 Setup Guidelines
 
 ### 1. Provision Oracle VMs
 - Create 3 VMs as per the resource split above.  
@@ -91,21 +89,28 @@ Instead of Jenkins, pipelines run **on GitHub Actions**:
 
 ```plaintext
 always-free-oracle/
-├── .github/workflows/build.yml         # GitHub Actions pipelines
-│   └── build.yml
+├── .github/workflows/
+│   └── build.yml                        # GitHub Actions pipeline
+│
 ├── ansible/
-│   ├── site.yml                       # Master playbook (runs all VMs together)
-│   ├── provision-vm1.yml              # Playbook for VM1 (Nginx + WireGuard)
-│   ├── provision-vm2.yml              # Playbook for VM2 (SonarQube + Nexus)
-│   ├── deploy-vm3.yml                 # Playbook for VM3 (Tomcat deployment)
-│   ├── inventory.ini                  # Oracle Cloud VM inventory
+│   ├── site.yml                          # Master playbook (runs all VMs)
+│   ├── provision-vm1.yml                 # VM1: Nginx + WireGuard
+│   ├── provision-vm2.yml                 # VM2: SonarQube + Nexus
+│   ├── deploy-vm3.yml                    # VM3: Tomcat deployment
+│   ├── inventory.ini                     # Oracle Cloud VM inventory
 │   ├── group_vars/
-│   │   ├── vm1.yml                    # Variables for VM1
-│   │   ├── vm2.yml                    # Variables for VM2
-│   │   └── vm3.yml                    # Variables for VM3
+│   │   ├── vm1.yml                       # VM1 variables (domain_name, etc.)
+│   │   ├── vm2.yml                       # VM2 variables (sonar_user, sonar_pass)
+│   │   └── vm3.yml                       # VM3 variables (nexus artifact URL)
 │   └── configs/
-│       ├── nginx-reverse-proxy.conf.j2    # Nginx reverse proxy template
-│       └── docker-compose-sonarnexus.yml.j2 # Docker Compose for SonarQube + Nexus
-|
-├── docs/                               # Documentation & diagrams
-└── README.md                           # This file
+│       ├── nginx-reverse-proxy.conf.j2   # Nginx reverse proxy template
+│       └── docker-compose-sonarnexus.yml.j2 # SonarQube + Nexus + DB
+│
+├── app/
+│   ├── pom.xml                            # Maven build file
+│   └── src/
+│       ├── main/java/                     # Java source code
+│       └── test/java/                     # Unit tests
+│
+├── docs/                                  # Documentation & diagrams
+└── README.md                              # Project README

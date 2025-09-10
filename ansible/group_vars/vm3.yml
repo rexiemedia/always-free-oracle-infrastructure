@@ -1,0 +1,5 @@
+# VM3 variables
+tomcat_service_name: tomcat9
+tomcat_webapps_dir: /var/lib/tomcat9/webapps
+artifact_name: my-app.war
+nexus_repo_url: "{{ lookup('env','NEXUS_URL') }}/repository/maven-releases/com/example/my-app/1.0.0/{{ artifact_name }}"

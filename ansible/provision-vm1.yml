@@ -1,0 +1,34 @@
+- hosts: vm1
+  become: yes
+  tasks:
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Copy Nginx reverse proxy template
+      template:
+        src: configs/nginx-reverse-proxy.conf.j2
+        dest: /etc/nginx/sites-available/sonar-nexus.conf
+      notify:
+        - Reload Nginx
+
+    - name: Enable Nginx site
+      file:
+        src: /etc/nginx/sites-available/sonar-nexus.conf
+        dest: /etc/nginx/sites-enabled/sonar-nexus.conf
+        state: link
+
+    - name: Install WireGuard
+      apt:
+        name: wireguard
+        state: present
+        update_cache: yes
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
