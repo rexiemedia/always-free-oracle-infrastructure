@@ -47,6 +47,12 @@
 #       - name: Checkout code
 #         uses: actions/checkout@v3
 
+#       - name: Set up SSH key
+#         run: |
+#             mkdir -p ~/.ssh
+#             echo "${{ secrets.SSH_PRIVATE_KEY3 }}" > ~/.ssh/oracle.pem
+#             chmod 600 ~/.ssh/oracle.pem
+
 #       - name: Download build artifact
 #         uses: actions/download-artifact@v3
 #         with:
@@ -92,6 +98,6 @@
 #         env:
 #           ANSIBLE_HOST_KEY_CHECKING: False
 #           ANSIBLE_USER: ubuntu
-#           ANSIBLE_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#           ANSIBLE_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY3 }}
 #           SONAR_PASSWORD: ${{ secrets.SONAR_PASSWORD }}      # For VM2 Docker Compose
 #           NEXUS_PASS: ${{ secrets.NEXUS_PASS }}              # If needed in deployment
