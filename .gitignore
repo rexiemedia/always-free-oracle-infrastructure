@@ -21,3 +21,47 @@ rad.json
 #Test results file
 TestResults.xml
 *.env
+# ---- Terraform ----
+*.tfstate
+*.tfstate.*
+*.tfvars           # variable definitions (secrets, ocids, keys)
+*.tfvars.json
+crash.log
+override.tf
+override.tf.json
+.terraform/        # local terraform working dir
+.terraform.lock.hcl
+
+# ---- Ansible ----
+inventory.ini      # generated dynamically, not stored in repo
+*.retry            # ansible retry files
+host_vars/         # per-host secrets (optional)
+group_vars/*.yml   # group vars (may contain secrets, keep ignored unless sanitized)
+
+# ---- Keys & Certificates ----
+*.pem
+*.key
+*.crt
+*.pub
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# ---- Logs & Outputs ----
+*.log
+*.out
+*.bak
+*.swp
+*.tmp
+
+# ---- Python / Helper scripts ----
+__pycache__/
+*.pyc
+
+# ---- System / Editor files ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.code-workspace
